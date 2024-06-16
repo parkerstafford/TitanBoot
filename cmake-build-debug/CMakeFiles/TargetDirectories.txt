@@ -1,0 +1,3 @@
+C:/Users/parke/OneDrive/Documents/GitHub/TitanBoot/cmake-build-debug/CMakeFiles/TitanBoot.dir
+C:/Users/parke/OneDrive/Documents/GitHub/TitanBoot/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/parke/OneDrive/Documents/GitHub/TitanBoot/cmake-build-debug/CMakeFiles/rebuild_cache.dir
