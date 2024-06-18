@@ -16,7 +16,8 @@ start:
     mov ds, ax
     mov es, ax
 
-    ; Bootloader code goes here
+    ; Call main function in C
+    call main
 
     ; Infinite loop to halt the system
 hang:
