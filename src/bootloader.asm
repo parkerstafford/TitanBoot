@@ -1,28 +1,42 @@
-bits 16
-
-org 0x7c00  ; The origin where BIOS loads the bootloader
+[bits 16]
+[org 0x7c00]
 
 start:
-    cli                   ; Clear interrupts
-    xor ax, ax            ; Zero out AX
-    mov ds, ax            ; Set DS to 0
-    mov es, ax            ; Set ES to 0
-    mov ss, ax            ; Set SS to 0
-    mov sp, 0x7c00        ; Set stack pointer to 0x7c00
-    sti                   ; Enable interrupts
-
     ; Set up segment registers
-    mov ax, 0x07C0
+    cli
+    cld
+    xor ax, ax
     mov ds, ax
     mov es, ax
+    mov ss, ax
+    mov sp, 0x7c00
 
-    ; Call main function in C
-    call main
+    ; Set up the A20 line
+    in al, 0x92
+    or al, 00000010b
+    out 0x92, al
 
-    ; Infinite loop to halt the system
+    ; Print start up message to the screen
+    mov si, msg
+    call print_string
+
+    ; Hang
 hang:
+    hlt
     jmp hang
 
-; Boot sector signature
+print_string:
+    mov ah, 0x0E ; BIOS teletype function
+.repeat:
+    lodsb
+    cmp al, 0
+    je .done
+    int 0x10
+    jmp .repeat
+.done:
+    ret
+
+msg db 'TitanBoot has successfully started', 0
+
 times 510-($-$$) db 0
 dw 0xaa55
